@@ -1,0 +1,67 @@
+{
+    "name": "cndrsdrmn/laravel-failures",
+    "type": "library",
+    "description": "Handle laravel renderer exceptions with a standardized failure json response format.",
+    "keywords": ["laravel", "exception", "json", "failures", "renderer"],
+    "homepage": "https://github.com/cndrsdrmn/laravel-failures",
+    "support": {
+        "issues": "https://github.com/cndrsdrmn/laravel-failures/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Candra Sudirman",
+            "email": "dev.cndrsdrmn@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.2"
+    },
+    "require-dev": {
+        "larastan/larastan": "^3.1",
+        "laravel/pint": "^1.21",
+        "orchestra/testbench": "^10.1",
+        "pestphp/pest": "^3.7",
+        "rector/rector": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Cndrsdrmn\\LaravelFailures\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Cndrsdrmn\\LaravelFailures\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "scripts": {
+        "lint": "pint",
+        "refactor": "rector",
+        "test:lint": "pint --test",
+        "test:refactor": "rector --dry-run",
+        "test:types": "phpstan analyse --ansi --memory-limit=1G",
+        "test:unit": "pest --colors=always --coverage --parallel --min=100",
+        "test": [
+            "@test:unit",
+            "@test:lint",
+            "@test:types",
+            "@test:refactor"
+        ]
+    }
+}
