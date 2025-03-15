@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Cndrsdrmn\LaravelFailures;
 
+use Illuminate\Support\Str;
+
 final class Failure
 {
     /**
@@ -24,6 +26,13 @@ final class Failure
     private static $timestampCallback;
 
     /**
+     * A callback function for generating trace IDs.
+     *
+     * @var ?callable
+     */
+    private static $tracerCallback;
+
+    /**
      * The wrapper key for the error messages.
      */
     private static string $wrap = 'errors';
@@ -42,6 +51,22 @@ final class Failure
     public static function createTimestampUsing(callable $callback): void
     {
         self::$timestampCallback = $callback;
+    }
+
+    /**
+     * Resets the tracer callback to its default behavior.
+     */
+    public static function createTracerNormally(): void
+    {
+        self::$tracerCallback = null;
+    }
+
+    /**
+     * Sets a custom callback function for generating trace IDs.
+     */
+    public static function createTracerUsing(callable $callback): void
+    {
+        self::$tracerCallback = $callback;
     }
 
     /**
@@ -82,6 +107,22 @@ final class Failure
         }
 
         return (string) $timestamp;
+    }
+
+    /**
+     * Generates a trace ID using the custom tracer callback if set, otherwise generates a UUID.
+     */
+    public static function tracer(): int|string
+    {
+        if (is_callable(self::$tracerCallback)) {
+            $tracer = call_user_func(self::$tracerCallback);
+
+            assert(is_int($tracer) || is_string($tracer), 'The tracer type should be int or string.');
+
+            return $tracer;
+        }
+
+        return str_replace('-', '', (string) Str::orderedUuid());
     }
 
     /**
