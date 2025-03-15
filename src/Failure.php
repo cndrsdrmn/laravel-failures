@@ -9,6 +9,11 @@ use Illuminate\Support\Str;
 final class Failure
 {
     /**
+     * The version of the Laravel Failures.
+     */
+    public const VERSION = '0.1.0';
+
+    /**
      * Indicates whether to force the rendering of exceptions.
      */
     private static bool $forceRender = false;
