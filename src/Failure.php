@@ -17,9 +17,32 @@ final class Failure
     private static string $metaWrap = 'meta';
 
     /**
+     * A callback function for generating timestamps.
+     *
+     * @var ?callable
+     */
+    private static $timestampCallback;
+
+    /**
      * The wrapper key for the error messages.
      */
     private static string $wrap = 'errors';
+
+    /**
+     * Resets the timestamp callback to its default behavior.
+     */
+    public static function createTimestampNormally(): void
+    {
+        self::$timestampCallback = null;
+    }
+
+    /**
+     * Sets a custom callback function for generating timestamps.
+     */
+    public static function createTimestampUsing(callable $callback): void
+    {
+        self::$timestampCallback = $callback;
+    }
 
     /**
      * Determine if the rendering of exceptions is forced.
@@ -43,6 +66,22 @@ final class Failure
     public static function shouldForceRender(bool $enabled = true): void
     {
         self::$forceRender = $enabled;
+    }
+
+    /**
+     * Generates a timestamp using the custom timestamp callback if set, otherwise uses the current time.
+     */
+    public static function timestamp(): string
+    {
+        $timestamp = now()->toISOString();
+
+        if (is_callable(self::$timestampCallback)) {
+            $timestamp = call_user_func(self::$timestampCallback);
+
+            assert(is_string($timestamp) || is_numeric($timestamp), 'The timestamp type should be string or numeric.');
+        }
+
+        return (string) $timestamp;
     }
 
     /**
