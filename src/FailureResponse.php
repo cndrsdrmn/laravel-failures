@@ -112,7 +112,7 @@ final readonly class FailureResponse implements Contracts\Responsable
      */
     private function metaThrowable(?Throwable $exception = null): Contracts\MetaThrowable
     {
-        return app(Contracts\MetaThrowable::class, ['exception' => $exception]); // @phpstan-ignore return.type
+        return new Types\Meta($exception);
     }
 
     /**
