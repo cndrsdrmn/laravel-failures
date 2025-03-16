@@ -134,10 +134,6 @@ final readonly class Breakdown implements ErrorProvider
         $issue = match (true) {
             $issue instanceof Enumerable => $issue->all(),
             $issue instanceof IssueDescriptor => Arr::wrap($issue),
-            is_array($issue) => array_map(
-                fn ($item): mixed => $item instanceof self ? self::wrap($item->all()) : $item,
-                $issue
-            ),
             default => $issue,
         };
 
