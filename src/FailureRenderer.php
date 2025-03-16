@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cndrsdrmn\LaravelFailures;
 
+use Cndrsdrmn\LaravelFailures\Types\Breakdown;
 use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,7 +39,9 @@ final class FailureRenderer
      */
     private function finalizeUnhandledFailure(Throwable $exception): Response
     {
-        return response()->json($exception->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        return Breakdown::throwable($exception)
+            ->withStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
+            ->response();
     }
 
     /**
