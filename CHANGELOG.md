@@ -7,7 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please do not update the unreleased notes.
 
-## [Unreleased](https://github.com/cndrsdrmn/laravel-failures/compare/v1.0.0...HEAD)
+## [Unreleased](https://github.com/cndrsdrmn/laravel-failures/compare/v1.1.0...1.x)
+
+## [v1.1.0](https://github.com/cndrsdrmn/laravel-failures/compare/v1.0.0...v1.1.0) - 2025-03-16
+
+* [1.x] Refactor and fixing at `Breakdown` by [@cndrsdrmn](https://github.com/cndrsdrmn) in https://github.com/cndrsdrmn/laravel-failures/pull/4
+* [1.x] Unregister `MetaThrowable` on `ServiceProvider` by [@cndrsdrmn](https://github.com/cndrsdrmn) in https://github.com/cndrsdrmn/laravel-failures/pull/5
 
 ## [v1.0.0](https://github.com/cndrsdrmn/laravel-failures/compare/v0.2.0...v1.0.0) - 2025-03-16
 
