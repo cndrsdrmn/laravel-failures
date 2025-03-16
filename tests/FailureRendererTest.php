@@ -106,7 +106,6 @@ it('render authentication exception', function (): void {
     );
 
     $response
-        ->dump()
         ->assertUnauthorized()
         ->assertJsonStructure([
             'message',
