@@ -27,7 +27,7 @@ jobs:
       - name: Remove optional "v" prefix
         id: version
         run: |
-          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "version=${VERSION#v}" >> "$GITHUB_OUTPUT"
         env:
           VERSION: ${{ inputs.version }}
 
