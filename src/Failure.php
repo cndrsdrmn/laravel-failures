@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cndrsdrmn\LaravelFailures;
 
+use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Support\Str;
 
 final class Failure
@@ -75,6 +76,14 @@ final class Failure
     }
 
     /**
+     * Registers a custom renderer for exceptions.
+     */
+    public static function handles(Exceptions $exceptions): void
+    {
+        $exceptions->renderable(self::renderer());
+    }
+
+    /**
      * Determine if the rendering of exceptions is forced.
      */
     public static function isForceRender(): bool
@@ -88,6 +97,14 @@ final class Failure
     public static function metaWrapper(): string
     {
         return self::$metaWrap;
+    }
+
+    /**
+     * Returns an instance of the FailureRenderer.
+     */
+    public static function renderer(): FailureRenderer
+    {
+        return app(FailureRenderer::class);
     }
 
     /**

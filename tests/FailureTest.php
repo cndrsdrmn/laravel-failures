@@ -7,6 +7,8 @@ namespace Tests;
 use AssertionError;
 use Carbon\Carbon;
 use Cndrsdrmn\LaravelFailures\Failure;
+use Cndrsdrmn\LaravelFailures\FailureRenderer;
+use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
 use Mockery;
@@ -124,4 +126,17 @@ test('tracer can be reset to default', function (): void {
     $tracer = Failure::tracer();
 
     expect($tracer)->toBe('fakeuuid');
+});
+
+test('handles registers renderer', function (): void {
+    $exceptions = Mockery::mock(Exceptions::class);
+    $exceptions->shouldReceive('renderable')->once();
+
+    Failure::handles($exceptions);
+});
+
+test('renderer should be callable instance', function (): void {
+    expect(Failure::renderer())
+        ->toBeInstanceOf(FailureRenderer::class)
+        ->toBeCallable();
 });
