@@ -95,9 +95,11 @@ final readonly class Breakdown implements ErrorProvider
      */
     public static function validation(ValidationException $exception): self
     {
-        $violations = Collection::make($exception->validator->failed())
-            ->map(fn (array $parameters): string => Collection::make($parameters) // @phpstan-ignore argument.type
-                ->map(function (array $parameter, string $rule): string { // @phpstan-ignore argument.type
+        /** @var array<string, array<string, list<string>>> $failed */
+        $failed = $exception->validator->failed();
+        $violations = Collection::make($failed)
+            ->map(fn (array $parameters): string => Collection::make($parameters)
+                ->map(function (array $parameter, string $rule): string {
                     $rule = class_exists($rule)
                         ? Str::of($rule)->classBasename()->snake()
                         : Str::of($rule)->snake();
@@ -107,9 +109,11 @@ final readonly class Breakdown implements ErrorProvider
                 ->join('|')
             );
 
-        $issues = Collection::make($exception->errors())
-            ->map(fn (array $messages, string $attribute): Violation => new Violation( // @phpstan-ignore argument.type
-                message: $messages[0] ?? '', // @phpstan-ignore argument.type
+        /** @var array<string, list<string>> $errors */
+        $errors = $exception->errors();
+        $issues = Collection::make($errors)
+            ->map(fn (array $messages, string $attribute): Violation => new Violation(
+                message: $messages[0] ?? '',
                 violated: $violations->get($attribute, ''),
                 attribute: $attribute,
                 prefix: Str::of($attribute)->start('/')
@@ -134,10 +138,6 @@ final readonly class Breakdown implements ErrorProvider
         $issue = match (true) {
             $issue instanceof Enumerable => $issue->all(),
             $issue instanceof IssueDescriptor => Arr::wrap($issue),
-            is_array($issue) => array_map(
-                fn ($item): mixed => $item instanceof self ? self::wrap($item->all()) : $item,
-                $issue
-            ),
             default => $issue,
         };
 
