@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Cndrsdrmn\LaravelFailures;
 
+use Cndrsdrmn\LaravelFailures\Contracts\MetaThrowable;
+use Cndrsdrmn\LaravelFailures\Types\Meta;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 
 final class ServiceProvider extends IlluminateServiceProvider
@@ -13,7 +15,7 @@ final class ServiceProvider extends IlluminateServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(MetaThrowable::class, Meta::class);
     }
 
     /**

@@ -10,7 +10,7 @@ use Illuminate\Contracts\Support\Arrayable;
  * @template-extends Arrayable<int, array<string, mixed>>
  * @template-extends Resolvable<int, array<string, mixed>>
  */
-interface ErrorProvider extends Arrayable, Resolvable
+interface ErrorProvider extends Arrayable, Resolvable, Responsable
 {
     /**
      * Get all errors as an array.
