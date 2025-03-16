@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please do not update the unreleased notes.
 
-## [Unreleased](https://github.com/cndrsdrmn/laravel-failures/compare/v1.0.0...master)
+## [Unreleased](https://github.com/cndrsdrmn/laravel-failures/compare/v1.0.0...HEAD)
 
 ## [v1.0.0](https://github.com/cndrsdrmn/laravel-failures/compare/v0.2.0...v1.0.0) - 2025-03-16
 
