@@ -11,7 +11,7 @@ final class Failure
     /**
      * The version of the Laravel Failures.
      */
-    public const VERSION = '0.1.0';
+    public const VERSION = '0.2.0';
 
     /**
      * Indicates whether to force the rendering of exceptions.
